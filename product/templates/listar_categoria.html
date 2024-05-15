@@ -1,0 +1,28 @@
+{% extends "login/header.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Lista de categorias</h1>
+
+<a href="{% url 'listar_productos' %}">Lista de productos</a> <br>
+<a href="{% url 'listar_marcas' %}">Lista de marcas</a> <br>
+<a href="{% url 'agregar_categoria' %}">Agregar categoria</a> <br>
+
+<ul>
+    {% for categoria in categorias %}
+
+    <li>
+        <p>{{categoria.nombre_categoria}}</p>
+        <a href="{% url 'modificar_categoria' categoria.id %}">Modificar</a>
+        <form action="{% url 'eliminar_categoria' categoria.id %}" method="post">
+
+            {% csrf_token %}
+            <input type="submit" value="Eliminar", onclick="return confirm('¿Estas seguro que quieres eliminar la categoria?')">
+
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+
+{% endblock %}

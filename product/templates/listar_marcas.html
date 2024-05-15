@@ -1,0 +1,25 @@
+{% extends "login/header.html" %}
+{% load static %}
+{% block content %}
+
+<h1>Listas de marcas</h1>
+
+<a href="{% url 'listar_productos' %}">Lista de productos</a> <br>
+<a href="{% url 'agregar_marca' %}">Agregar marca</a> <br>
+<a href="{% url 'listar_categorias' %}">Lista de categorias</a> <br>
+
+<ul>
+    {% for marca in marcas %}
+    <li>
+        <p>{{marca.nombre_marca}}</p>
+        <a href="{% url 'modificar_marca' marca.id %}">Modificar</a>
+        <form action="{% url 'eliminar_marca' marca.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Eliminar" onclick="return confirm('¿Estas seguro que quieres eliminar la marca?')">
+    
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

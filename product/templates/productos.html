@@ -1,0 +1,46 @@
+{% extends "login/header.html" %}
+{% load static %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="../static/css/styleProducto.css">
+{% endblock %}
+
+{% block content %}
+<h1>Productos</h1>
+
+<form action="" method="GET">
+  <select name="divisa" id="divisa-select">
+    <option value="CLP">CLP</option>
+    <option value="USD">USD</option>
+    <option value="EUR">EUR</option>
+  </select>
+  <button type="submit">Cambiar Divisa</button>
+</form>
+
+{% if productos %}
+<div class="card-container" style="display: flex;">
+  {% for producto in productos %}
+    <a href="{% url 'detalle_producto' producto.id %}">
+      <div class="card" style="width: 18rem; margin-right: 10px;">
+        <img class="card-img-top" src="{{producto.img_producto.url}}" alt="{{producto.nombre_producto}}">
+        <div class="card-body">
+          <h5 class="card-title">{{producto.nombre_producto}}</h5>
+          <p class="card-text">Precio: 
+            {% if divisa == 'CLP' %}
+              ${{ producto.precio_producto }}
+            {% elif divisa == 'USD' %}
+              {{ producto.precio_producto_usd }} USD
+            {% elif divisa == 'EUR' %}
+              {{ producto.precio_producto_eur }} EUR
+            {% endif %}
+          </p>
+          <button type="submit">Añadir al carro</button>
+        </div>
+      </div>
+    </a>
+  {% endfor %}
+</div>
+{% else %}
+<p>No hay productos disponibles</p>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "login/header.html" %}
+{% load static %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static '/styleListar.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<h1>Lista de productos</h1>
+<ul>
+    {% for producto in productos %}
+
+    <li>
+        <img src="{{producto.img_producto.url}}" alt="{{producto.nombre_producto}}">
+        <p>{{producto.nombre_producto}}</p>
+        <p>Stock: {{producto.stock_producto}}</p>
+        <a href="{% url 'modificar_producto' producto.id %}">Modificar</a>
+        <form action="{% url 'eliminar_producto' producto.id %}" method="post">
+            {% csrf_token %}
+            <input type="submit" value="Eliminar" onclick="return confirm('¿Estas seguro que quieres eliminar el producto?')">
+        </form>
+    </li>
+    {% endfor %}
+</ul>
+
+<a href="{% url 'agregar_producto' %}">Agregar producto</a> <br>
+<a href="{% url 'listar_marcas' %}">Lista de marcas</a> <br>
+<a href="{% url 'listar_categorias' %}">Lista de categorias</a>
+
+{% endblock %}

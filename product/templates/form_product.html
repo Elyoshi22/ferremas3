@@ -1,0 +1,17 @@
+{% extends "login/header.html" %}
+{% load static %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static '/styleFormProduct.css' %}">
+{% endblock %}
+
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+
+    {% csrf_token %}
+
+    {{ form.as_p}}
+
+    <button type="submit">Agregar producto</button>
+
+</form>
+{% endblock %}

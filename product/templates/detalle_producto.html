@@ -1,0 +1,25 @@
+{% extends "login/header.html" %}
+{% load static %}
+
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static '/styleDetalleP.css' %}">
+{% endblock %}
+
+{% block content %}
+<div class="detalle-producto">
+  <h1>{{ producto.nombre_producto }}</h1>
+  <img src="{{ producto.img_producto.url }}" alt="Imagen de {{ producto.nombre_producto }}">
+  <p>Descripción: {{ producto.descripcion_producto }}</p>
+  <br>
+  <p>Precio: {{ producto.precio_producto }}</p>
+  <br>
+  <p>Stock disponible: {{ producto.stock_producto }}</p>
+  <br>
+  <p>Marca: {{ producto.marca_producto }}</p>
+  <br>
+  <p>Descripcion Tecnica: {{ producto.descripcion_tecnica}}
+  </p>
+  <br>
+  <button type="submit">Agregar al carro</button>
+</div>
+{% endblock %}

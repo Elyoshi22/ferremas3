@@ -1,0 +1,60 @@
+{% include 'login/header.html' %}
+{% load static %}
+
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+
+{% if carrito %}
+
+<div class="card-container" style="display: flex;">
+  <form method="post" action="{% url 'actualizar_carrito' %}">
+    {% csrf_token %}
+    {% for item in items %}
+    <div class="card" style="width: 18rem; margin-right: 10px;">
+      <img class="card-img-top" src="{{ item.producto.img_producto.url }}" alt="Card image cap">
+      <div class="card-body">
+        <h5 class="card-title">{{ item.producto.nombre_producto }}</h5>
+        <p class="card-text">Precio: {{ item.producto.precio_producto }}</p>
+        <p class="card-text">
+          <label for="cantidad_{{ item.id }}">Cantidad:</label>
+          <input type="number" id="cantidad_{{ item.id }}" name="cantidad_{{ item.id }}" value="{{ item.cantidad }}" min="1" title="Ingrese la cantidad deseada">
+        </p>
+        <input type="hidden" name="item_id" value="{{ item.id }}">
+      </div>
+    </div>
+    {% endfor %}
+    <button type="submit">Actualizar carrito</button>
+  </form>
+</div>
+
+<div id="checkout-container" style="margin-top: 20px;">
+    <button id="checkout-button">Pagar</button>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const mp = new MercadoPago('{{ public_key }}', {
+            locale: 'es-CL'
+        });
+
+        mp.checkout({
+            preference: {
+                id: '{{ preference.id }}'
+            },
+            autoOpen: false, // Desactiva autoOpen para evitar el error
+            render: {
+                container: '#checkout-button',
+                label: 'Pagar'
+            }
+        }).then((checkout) => {
+            document.getElementById('checkout-button').addEventListener('click', function() {
+                checkout.open();
+            });
+        }).catch(error => {
+            console.error('Error initializing MercadoPago:', error);
+        });
+    });
+</script>
+
+{% else %}
+<p>No hay productos en el carrito.</p>
+{% endif %}

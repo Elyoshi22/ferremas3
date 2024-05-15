@@ -1,0 +1,41 @@
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  .detalle-producto {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  .detalle-producto h1 {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .detalle-producto img {
+    max-width: 100%;
+    height: auto;
+    margin-bottom: 20px;
+  }
+  
+  .detalle-producto p {
+    margin-bottom: 10px;
+  }
+  
+  .detalle-producto button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .detalle-producto button:hover {
+    background-color: #555;
+  }
+  
